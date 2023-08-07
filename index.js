@@ -6,6 +6,7 @@ const productRouter = require('./router/products');
 const userRouter = require('./router/user');
 const port = process.env.PORT || 5001
 const mongoose = require('mongoose');
+const cors = require('cors')
 
 
 // connection 
@@ -15,6 +16,7 @@ async function main() {
   console.log('connected')
 }
 
+app.use(cors())
 app.use(express.json())
 app.use(morgan('default'));
 app.use('/products', productRouter.router);
