@@ -20,7 +20,8 @@ const productSchema = new Schema({
     discountPercentage: {
         type: Number,
          min: [0,'min discount'],
-         max:[50,'max discount you can give']
+         max:[50,'max discount you can give'],
+         default: 0
         },
     rating: {
         type: Number,
