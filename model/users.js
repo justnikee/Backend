@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
     firstName: {
-        type: String, 
+        type: String,
+        trim: true,
         required: true, 
         max: [16, 'Max character reached!']
     },
@@ -19,7 +20,23 @@ const userSchema = new Schema({
         max: 100
     },
     email: {
-        type: String
+        type: String,
+        require: true,
+        unique: true
+    },
+    phone: {
+        type: String,
+        require: true
+    },
+    address: {
+        type: String,
+        require: true
+    },
+    password: {
+        type: String,
+        require: true
     }
+},{timestamps: true}
+);
 
-})
+exports.Users = mongoose.model("Users", userSchema);

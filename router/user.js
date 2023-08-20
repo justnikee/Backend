@@ -3,7 +3,8 @@ const router = express.Router();
 const userController = require('../controller/user')
 
 router
-.post('/',   userController.createUser)
+.post('/register', userController.registerUser)
+.post('/',   userController.createUser)  // Resister user
 .get('/',   userController.getAllUsers)
 .get('/:id',   userController.getUsers)
 .put('/:id',  userController.replaceUsers)
