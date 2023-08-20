@@ -82,6 +82,11 @@ try {
 }
 
 
+const testUser = (req, res) => {
+    res.status(200).json({message: 'protected'});
+}
+
+
 
 const createUser = (req, res) => {
     console.log(req.body);
@@ -95,11 +100,11 @@ const getAllUsers = async(req, res) => {
 }
 
 const getUsers = (req, res) => {
-    console.log(req.params)
-    const id = +req.params.id;
-    const user = Users.find(prod => prod.id === id);
-    const rez = res.json(user);
-    console.log(rez)
+    // console.log(req.params)
+    // const id = +req.params.id;
+    // const user = Users.find(prod => prod.id === id);
+    // const rez = res.json(user);
+    // console.log(rez)
 }
 
 const replaceUsers = (req, res) => {
@@ -136,5 +141,6 @@ module.exports = {
     createUser,
     updateUsers,
     replaceUsers,
-    deleteUsers
+    deleteUsers,
+    testUser
 }

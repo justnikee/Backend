@@ -35,6 +35,10 @@ const userSchema = new Schema({
     password: {
         type: String,
         require: true
+    },
+    role: {
+        type: Number,
+       default: 0
     }
 },{timestamps: true}
 );
