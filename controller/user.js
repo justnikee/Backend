@@ -1,30 +1,7 @@
-const { hashPass } = require('../helpers/passDcrypt');
+const { hashPass, comparePass } = require('../helpers/passDcrypt');
 const model = require('../model/users');
 const Users = model.Users;
-
-
-// const registerUser = async(req, res) => {
-//     try {
-//         const {firstName, lastName, age, email, phone, address, password } = req.body;
-//         if(!firstName | !lastName | !age | !email | !phone | !address){
-//             return res.status(404).json({message: 'all fields required!'});
-//         }
-
-//         const existingUser = Users.findOne({email});
-//         if(existingUser){
-//             return res.status(200).json({message: 'User Already Exist! Please Login.'})
-//         }
-
-//         const hashPass = await hashPass(password);
-
-//         const user = new Users({firstName, lastName, age, email, phone, address, password: hashPass}).save();
-        
-//         return res.status(201).json(user);
-//         console.log(user)
-//     } catch (error) {
-//         res.status(500).json(error);
-//     }
-// }
+const JWT = require('jsonwebtoken');
 
 
 const registerUser = async (req, res) => {
@@ -39,7 +16,6 @@ const registerUser = async (req, res) => {
         if (existingUser) {
             return res.status(409).json({ message: 'User Already Exists! Please Login.' });
         }
-
         const hashPasss = await hashPass(password);
 
         const user = await new Users({ firstName, lastName, age, email, phone, address, password: hashPasss }).save();
@@ -52,6 +28,58 @@ const registerUser = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+
+const userLogin = async(req,res) => {
+try {
+    const {email, password} = req.body;
+    if(!email || !password){
+        return res.status(404).send({
+            sucess: false,
+            message: 'Both fields require!'
+        })
+    }
+
+    const user = await Users.findOne({email});
+    if(!user){
+        return res.status(404).send({
+            sucess: false,
+            message: 'User Not Found! SignUp'
+        });
+    }
+
+    const matchPass = await comparePass(password, user.password);
+
+    if(!matchPass){
+        return res.status(200).send({
+            sucess: false,
+            message: 'Password Not Matched!'
+        });
+    }
+
+    const token = await JWT.sign({_id: user._id}, process.env.JWT_SECRET, {
+        expiresIn: "7d"
+    });
+    res.status(200).send({
+        sucess: true,
+        message: 'Login Success!',
+        user: {
+            name: `${user.firstName} ${user.lastName}`,
+            email: user.email,
+            phone: user.phone,
+            address: user.address
+        },
+        token,
+    });   
+} catch (error) {
+    console.log(error);
+    res.status(404).send({
+        sucess: false,
+        message: 'Failed!',
+        error
+    })
+}
+}
 
 
 
@@ -102,6 +130,7 @@ const deleteUsers = (req, res) => {
 
 module.exports = {
     registerUser,
+    userLogin,
     getAllUsers,
     getUsers,
     createUser,

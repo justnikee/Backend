@@ -5,6 +5,7 @@ const userController = require('../controller/user')
 router
 .post('/register', userController.registerUser)
 .post('/',   userController.createUser)  // Resister user
+.post('/login', userController.userLogin)
 .get('/',   userController.getAllUsers)
 .get('/:id',   userController.getUsers)
 .put('/:id',  userController.replaceUsers)
