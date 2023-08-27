@@ -3,13 +3,13 @@ const { Schema } = mongoose;
 
 
 const userSchema = new Schema({
-    firstName: {
+    firstname: {
         type: String,
         trim: true,
         required: true, 
         max: [16, 'Max character reached!']
     },
-    lastName: {
+    lastname: {
         type: String, 
         max: [16, 'Max character reached!']
     },

@@ -6,8 +6,8 @@ const JWT = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
     try {
-        const { firstName, lastName, age, email, phone, address, password } = req.body;
-        if (!firstName || !lastName || !age || !email || !phone || !address || !password) {
+        const { firstname, lastname, age, email, phone, address, password } = req.body;
+        if (!firstname || !lastname || !age || !email || !phone || !address || !password) {
             return res.status(400).json({ message: 'All fields are required!' });
         }
 
@@ -18,11 +18,15 @@ const registerUser = async (req, res) => {
         }
         const hashPasss = await hashPass(password);
 
-        const user = await new Users({ firstName, lastName, age, email, phone, address, password: hashPasss }).save();
+        const user = await new Users({ firstname, lastname, age, email, phone, address, password: hashPasss }).save();
 
-        console.log(user);
+        return res.status(201).send({
+            success: true,
+            message: 'User Created Successfully 😊',
+            user
+        });
 
-        return res.status(201).json(user);
+        console.log(user)
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal Server Error' });
@@ -64,7 +68,7 @@ try {
         sucess: true,
         message: 'Login Success!',
         user: {
-            name: `${user.firstName} ${user.lastName}`,
+            name: `${user.firstname} ${user.lastname}`,
             email: user.email,
             phone: user.phone,
             address: user.address
