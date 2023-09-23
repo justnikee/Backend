@@ -2,7 +2,7 @@ const { default: slugify } = require("slugify");
 const model = require("../model/category");
 const Category = model.Category;
 
-const createCategoryControler = async (req, res) => {
+const createCategory = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name) {
@@ -34,6 +34,11 @@ const createCategoryControler = async (req, res) => {
   }
 };
 
+const getCategory = async () => {
+  return helllo;
+};
+
 module.exports = {
-  createCategoryControler,
+  createCategory,
+  getCategory,
 };

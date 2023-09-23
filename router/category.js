@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
+const categoryControler = require("../controller/category");
 const { requireSignIn, isAdmin } = require("../middleware/authMiddleware");
-const { createCategoryControler } = require("../controller/category");
 
-router.post("create-category", requireSignIn, isAdmin, createCategoryControler);
+router
+  .get("/", categoryControler.getCategory)
+  .post("/create", categoryControler.createCategory);
+
+module.exports = router;
