@@ -1,46 +1,54 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Product } = require("./products");
 const { Schema } = mongoose;
 
-
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     firstname: {
-        type: String,
-        trim: true,
-        required: true, 
-        max: [16, 'Max character reached!']
+      type: String,
+      trim: true,
+      required: true,
+      max: [16, "Max character reached!"],
     },
     lastname: {
-        type: String, 
-        max: [16, 'Max character reached!']
+      type: String,
+      max: [16, "Max character reached!"],
     },
     age: {
-        type: Number,
-        require: true,
-        min: 12,
-        max: 100
-    },
+      type: Number,
+      require: true,
+      min: 12,
+      max: 100,
+    }, 
     email: {
-        type: String,
-        require: true,
-        unique: true
+      type: String,
+      require: true,
+      unique: true,
     },
     phone: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     address: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     password: {
-        type: String,
-        require: true
+      type: String,
+      require: true,
     },
     role: {
-        type: Number,
-       default: 0
-    }
-},{timestamps: true}
+      type: Number,
+      default: 0,
+    },
+    cart: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: Product,
+      },
+    ],
+  },
+  { timestamps: true }
 );
 
 exports.Users = mongoose.model("Users", userSchema);
