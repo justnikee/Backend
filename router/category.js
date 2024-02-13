@@ -5,6 +5,6 @@ const { requireSignIn, isAdmin } = require("../middleware/authMiddleware");
 
 router
   .get("/", categoryControler.getCategory)
-  .get("/getCatProducts/:cat", categoryControler.findProductByCatagory);
+  .get("/:cat", categoryControler.findProductByCatagory);
 
 module.exports = router;
