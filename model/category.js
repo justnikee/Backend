@@ -11,6 +11,12 @@ const categorySchema = new Schema({
     type: String,
     lowercase: true,
   },
+  products: [
+    { 
+      type: Schema.Types.ObjectId, 
+      ref: "Product" 
+    }
+  ]
 });
 
 exports.Category = mongoose.model("Category", categorySchema);
