@@ -17,20 +17,6 @@ const productSchema = new Schema({
          required : true,
           min:[0, 'not vailid price']
         },
-    discountPercentage: {
-        type: Number,
-         min: [0,'min discount'],
-         max:[50,'max discount you can give'],
-         default: 0
-        },
-    rating: {
-        type: Number,
-        min:0,
-        max:5
-    },
-    brand: {
-        type: String,
-        },
     category: {
         type: Schema.Types.ObjectId, 
         ref: 'Category'

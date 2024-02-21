@@ -7,11 +7,12 @@ const Category = model.Category;
 
 const createCategory = async (req, res) => {
   try {
-    const {name,slug} = req.body;
+    const {name,slug, featuredImage} = req.body;
 
     await Category.create({
       name: name,
-      slug: slug
+      slug: slug,
+      featuredImage
     });
 
     res.status(201).json({"message" : "category created"});

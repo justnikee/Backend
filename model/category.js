@@ -11,6 +11,9 @@ const categorySchema = new Schema({
     type: String,
     lowercase: true,
   },
+  featuredImage :{
+          type: String
+  },
   products: [
     { 
       type: Schema.Types.ObjectId, 
