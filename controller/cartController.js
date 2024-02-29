@@ -69,8 +69,39 @@ const removeCartItem = async (req, res) => {
   }
 };
 
+
+const updateCartItemQuantity = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    console.log(itemId);
+    const { quantity } = req.body;
+
+    if (!quantity || quantity < 1) {
+      return res.status(400).json({ message: 'Invalid quantity' });
+    }
+
+    const updatedCartItem = await Cart.findByIdAndUpdate(
+      itemId,
+      { quantity },
+      { new: true }
+    );
+
+    if (!updatedCartItem) {
+      return res.status(404).json({ message: 'Cart item not found' });
+    }
+
+    return res.status(200).json({ message: 'Cart item quantity updated', updatedCartItem });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
 module.exports = {
   addToCart,
   getCartItems,
   removeCartItem,
+  updateCartItemQuantity
 };
